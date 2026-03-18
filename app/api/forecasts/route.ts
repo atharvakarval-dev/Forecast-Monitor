@@ -8,8 +8,8 @@ const ELEXON_WINDFOR_URL =
 /** January 1, 2025 as the earliest allowed startTime */
 const JAN_2025_EPOCH = new Date("2025-01-01T00:00:00Z").getTime();
 
-/** Maximum allowed forecast horizon in hours (0–48) */
-const MAX_HORIZON_HOURS = 48;
+/** Maximum allowed forecast horizon in hours (0–72) */
+const MAX_HORIZON_HOURS = 72;
 
 /**
  * GET /api/forecasts
