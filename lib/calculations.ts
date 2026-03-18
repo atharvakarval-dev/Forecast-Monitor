@@ -1,9 +1,5 @@
 import type { DataPoint, ForecastPoint, CombinedDataPoint, MetricSummary as MetricSummaryType } from "@/types";
 
-// Note: Re-defining types locally if needed to match the new type names, 
-// or updating imports. Let's use the actual types we defined.
-import type { DataPoint, ForecastPoint, CombinedDataPoint, MetricSummary as MetricSummaryType } from "@/types";
-
 /**
  * Calculates the Mean Absolute Error (MAE) between forecast and actual values.
  */

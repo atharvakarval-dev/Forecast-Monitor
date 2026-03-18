@@ -113,4 +113,3 @@ From the Jupyter interface, you can run `forecast_error_analysis.ipynb` and `win
 
 ## AI Disclosure
 Used Claude to generate boilerplate component scaffolding and Recharts aesthetic structure. All business logic, algorithms, Next.js architecture logic, API routing implementation, and notebook analysis conclusions were written by me.
-# Forecast-Monitor
