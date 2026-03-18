@@ -26,7 +26,7 @@ graph TD
 | `/app/page.tsx` | Main dashboard view assembling controls, metrics, and charts. |
 | `/app/layout.tsx` | Root layout configuring fonts, metadata, and the dark mode `ThemeProvider`. |
 | `/app/globals.css` | Global Tailwind CSS, containing custom slide component CSS and dark mode CSS variables. |
-| `/components/charts/` | Recharts-based data visualizations (`TimeSeriesChart.tsx`, `ErrorBarChart.tsx`). |
+| `/components/charts/` | Recharts-based data visualizations (`ClientTimeSeriesChart.tsx`, `ErrorBarChart.tsx`). |
 | `/components/controls/` | Interactive user inputs (`DateRangePicker.tsx`, `HorizonSlider.tsx`). |
 | `/components/metrics/` | KPI display components (`MetricCard.tsx`, `MetricRow.tsx`). |
 | `/components/ui/` | Separated UI states for standard structure (`LoadingSkeleton.tsx`, `EmptyState.tsx`, `ErrorState.tsx`). |
