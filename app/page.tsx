@@ -43,10 +43,10 @@ export default function DashboardPage() {
   /**
    * Triggers data fetch with current control values.
    */
-  const handleApply = useCallback(() => {
+  const handleApply = useCallback((horizonOverride?: number) => {
     const fromIso = localToIso(localFrom);
     const toIso = localToIso(localTo);
-    loadData({ from: fromIso, to: toIso, horizon: localHorizon });
+    loadData({ from: fromIso, to: toIso, horizon: horizonOverride ?? localHorizon });
   }, [localFrom, localTo, localHorizon, loadData]);
 
   /**
@@ -103,11 +103,11 @@ export default function DashboardPage() {
             <HorizonSlider
               value={localHorizon}
               onChange={setLocalHorizon}
-              onCommit={() => handleApply()}
+              onCommit={(v) => handleApply(v)}
             />
           </div>
           <button
-            onClick={handleApply}
+            onClick={() => handleApply()}
             disabled={isLoading}
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-500 px-5 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] whitespace-nowrap"
           >
