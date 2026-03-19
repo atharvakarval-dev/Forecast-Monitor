@@ -45,10 +45,13 @@ function CustomXAxisTick({
 }) {
   if (!payload || x === undefined || y === undefined) return null;
 
-  const current = parseISO(payload.value);
+  const timeStr = payload.value;
+  const hm = timeStr.substring(11, 16);
   const idx = data.findIndex((d) => d.time === payload.value);
-  const prev = idx > 0 ? parseISO(data[idx - 1].time) : null;
-  const showDate = !prev || current.toDateString() !== prev.toDateString();
+  const prevTimeStr = idx > 0 ? data[idx - 1].time : null;
+  const showDate = !prevTimeStr || timeStr.substring(0, 10) !== prevTimeStr.substring(0, 10);
+  const dateParts = timeStr.substring(0, 10).split("-");
+  const ddmmyy = `${dateParts[2]}/${dateParts[1]}/${dateParts[0].substring(2)}`;
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -61,7 +64,7 @@ function CustomXAxisTick({
         fontSize={12}
         fontFamily="system-ui, sans-serif"
       >
-        {format(current, "HH:mm")}
+        {hm}
       </text>
       {showDate && (
         <text
@@ -73,7 +76,7 @@ function CustomXAxisTick({
           fontSize={11}
           fontFamily="system-ui, sans-serif"
         >
-          {format(current, "dd/MM/yy")}
+          {ddmmyy}
         </text>
       )}
     </g>
@@ -112,7 +115,9 @@ function CustomTooltip({
       <p className="text-xs text-muted-foreground mb-2 font-mono">
         {(() => {
           try {
-            return format(parseISO(label), "dd/MM/yyyy HH:mm") + " UTC";
+            const date = label.substring(0, 10).split("-");
+            const time = label.substring(11, 16);
+            return `${date[2]}/${date[1]}/${date[0]} ${time} UTC`;
           } catch {
             return label;
           }

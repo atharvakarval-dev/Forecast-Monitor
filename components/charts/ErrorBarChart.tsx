@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
   Cell,
+  Brush,
 } from "recharts";
 import { format, parseISO } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -44,7 +45,9 @@ function CustomTooltip({
       <p className="text-xs text-muted-foreground mb-2 font-mono">
         {(() => {
           try {
-            return format(parseISO(label), "dd/MM/yyyy HH:mm") + " UTC";
+            const date = label.substring(0, 10).split("-");
+            const time = label.substring(11, 16);
+            return `${date[2]}/${date[1]}/${date[0]} ${time} UTC`;
           } catch {
             return label;
           }
@@ -86,11 +89,8 @@ export function ErrorBarChart({ data, isLoading }: ErrorBarChartProps) {
     );
   }
 
-  const errorData = data.filter(
-    (d): d is CombinedDataPoint & { error: number } => d.error !== undefined
-  );
-
-  if (errorData.length === 0) return null;
+  const hasErrors = data.some((d) => d.error !== undefined);
+  if (!hasErrors) return null;
 
   return (
     <div className="mt-6">
@@ -99,7 +99,7 @@ export function ErrorBarChart({ data, isLoading }: ErrorBarChartProps) {
       </h3>
       <ResponsiveContainer width="100%" height={220}>
         <BarChart
-          data={errorData}
+          data={data}
           syncId="dashboard"
           margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
         >
@@ -112,7 +112,7 @@ export function ErrorBarChart({ data, isLoading }: ErrorBarChartProps) {
             dataKey="time"
             tickFormatter={(time: string) => {
               try {
-                return format(parseISO(time), "HH:mm");
+                return time.substring(11, 16);
               } catch {
                 return time;
               }
@@ -146,14 +146,15 @@ export function ErrorBarChart({ data, isLoading }: ErrorBarChartProps) {
           />
           <ReferenceLine y={0} stroke="hsl(var(--border))" strokeWidth={1} />
           <Bar dataKey="error" radius={[2, 2, 0, 0]} maxBarSize={6}>
-            {errorData.map((entry, index) => (
+            {data.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={entry.error >= 0 ? "#f87171" : "#3b82f6"}
+                fill={entry.error !== undefined && entry.error >= 0 ? "#f87171" : "#3b82f6"}
                 fillOpacity={0.7}
               />
             ))}
           </Bar>
+          <Brush dataKey="time" height={0} opacity={0} travellerWidth={0} />
         </BarChart>
       </ResponsiveContainer>
       <div className="flex items-center justify-center gap-6 mt-2 text-xs text-muted-foreground">
