@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import type { ElexonFuelHHRecord, DataPoint } from "@/types";
 import { getCached, setCache } from "@/lib/cache";
 
+export const dynamic = "force-dynamic";
+
 const ELEXON_FUELHH_URL =
   "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH/stream";
 
